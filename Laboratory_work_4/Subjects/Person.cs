@@ -1,4 +1,5 @@
 ﻿using Laboratory_work_4.Interfaces;
+using Laboratory_work_4.Subjects.Helper;
 
 namespace Laboratory_work_4.Subjects
 {
@@ -9,6 +10,7 @@ namespace Laboratory_work_4.Subjects
         public string Name { get; }
         public decimal CurrentWealth { get; private set; }
         public IIncomeStrategy CurrentStrategy { get; private set; }
+        public IncomeResult LastIncomeResult { get; private set; }
 
         public Person(string name, decimal initialWealth, IIncomeStrategy strategy)
         {
@@ -17,41 +19,32 @@ namespace Laboratory_work_4.Subjects
             CurrentStrategy = strategy;
         }
 
-        // Method to change the strategy dynamically
         public void ChangeStrategy(IIncomeStrategy newStrategy)
         {
             CurrentStrategy = newStrategy;
             Console.WriteLine($"  -> Strategy for '{Name}' changed to: {newStrategy.StrategyName}");
         }
 
-        // Method that uses the current strategy to receive income
         public void ReceiveIncome()
         {
             Console.WriteLine($"\n> '{Name}' ({CurrentStrategy.StrategyName}) before income: {CurrentWealth:C}");
 
-            decimal income = CurrentStrategy.GetIncome(CurrentWealth);
-            CurrentWealth += income;
+            LastIncomeResult = CurrentStrategy.GetIncome(CurrentWealth);
 
-            Console.WriteLine($"  - New Wealth: {CurrentWealth:C}");
+            decimal netIncome = LastIncomeResult.GrossIncome - LastIncomeResult.TaxPaid;
+            CurrentWealth += netIncome;
 
-            // Notify observers after the state changes
-            Notify();
+            Console.WriteLine($"  - Net income: {netIncome:C}, New Wealth: {CurrentWealth:C}");
+
+            Notify(); // Notify the TaxService
         }
 
-        // ISubject methods (Observer)
-        public void Attach(IObserver observer)
-        {
-            _observers.Add(observer);
-        }
-
-        public void Detach(IObserver observer)
-        {
-            _observers.Remove(observer);
-        }
-
+        // ISubject methods
+        public void Attach(IObserver observer) => _observers.Add(observer);
+        public void Detach(IObserver observer) => _observers.Remove(observer);
         public void Notify()
         {
-            foreach (IObserver observer in _observers)
+            foreach (var observer in _observers)
             {
                 observer.Update(this);
             }
