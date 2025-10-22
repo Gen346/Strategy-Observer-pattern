@@ -6,6 +6,5 @@ namespace Laboratory_work_4.Interfaces
     {
         IncomeResult GetIncome(decimal currentWealth);
         string StrategyName { get; }
-        // We no longer need IncomeType property as the tax payment logic determines status
     }
 }
