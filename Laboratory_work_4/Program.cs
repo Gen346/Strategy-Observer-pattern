@@ -6,7 +6,7 @@ using Laboratory_work_4.Subjects;
 public class Program
 {
     private static readonly Random Rnd = new Random();
-    private static readonly string[] Names = { "Dima", "Danya", "Eugene", "Maria", "Artem", "Herman", "Nikita", "Vika", "Kolya", "Andrii" };
+    private static readonly string[] Names = { "Dima", "Danya", "Eugene", "Maria", "Artem", "Herman", "Mykyta", "Vika", "Kolya", "Andrii", "Katryne", "Sergiy", "Angelina", "Bogdan" };
 
     private static Person CreateRandomPerson(string name)
     {
@@ -49,7 +49,7 @@ public class Program
         Console.WriteLine($"\n[INFO] Tax Service is ready for surveillance.");
 
         List<Person> peopleList = new List<Person>();
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < Names.Length; i++)
         {
             Person person = CreateRandomPerson(Names[i]);
             person.Attach(taxService);
