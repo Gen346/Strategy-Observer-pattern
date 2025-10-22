@@ -2,8 +2,8 @@
 {
     public class IncomeResult
     {
-        public decimal GrossIncome { get; set; } // Дохід до податку
-        public decimal TaxPaid { get; set; }     // Сплачений податок
-        public string StrategyName { get; set; } // Назва стратегії
+        public decimal GrossIncome { get; set; } // Tax income
+        public decimal TaxPaid { get; set; }     // Payed tax
+        public string? StrategyName { get; set; } // Stratehy name
     }
 }
