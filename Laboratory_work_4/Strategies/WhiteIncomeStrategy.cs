@@ -1,23 +1,30 @@
 ﻿using Laboratory_work_4.Interfaces;
+using Laboratory_work_4.Subjects.Helper;
 
 namespace Laboratory_work_4.Strategies
 {
     public class WhiteIncomeStrategy : IIncomeStrategy
     {
-        private const decimal TaxRate = 0.18m;
+        private const decimal StandardTaxRate = 0.23m;
         private const decimal SalaryFactor = 0.05m;
 
-        public string StrategyName => "White Income";
-        public string IncomeType => "White";
+        public string StrategyName => "White Income (Tax Compliant)";
 
-        public decimal GetIncome(decimal currentWealth)
+        public IncomeResult GetIncome(decimal currentWealth)
         {
-            // Income based on current wealth (simplification)
-            decimal incomeBeforeTax = Math.Max(1000, currentWealth * SalaryFactor);
-            decimal tax = incomeBeforeTax * TaxRate;
-            decimal netIncome = incomeBeforeTax - tax;
-            Console.WriteLine($"  - [White] Gross: {incomeBeforeTax:C}, Tax: {tax:C}, Net: {netIncome:C}");
-            return netIncome;
+            decimal grossIncome = Math.Max(1000, currentWealth * SalaryFactor);
+            decimal taxDue = grossIncome * StandardTaxRate;
+
+            decimal netIncome = grossIncome - taxDue;
+
+            Console.WriteLine($"  - [White] Gross: {grossIncome:C}, Paid Tax: {taxDue:C}, Net: {netIncome:C}");
+
+            return new IncomeResult
+            {
+                GrossIncome = grossIncome,
+                TaxPaid = taxDue, // Correct amount is paid
+                StrategyName = StrategyName
+            };
         }
     }
 }

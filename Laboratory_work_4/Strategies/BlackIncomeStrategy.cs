@@ -1,25 +1,27 @@
 ﻿using Laboratory_work_4.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Laboratory_work_4.Subjects.Helper;
 
 namespace Laboratory_work_4.Strategies
 {
     public class BlackIncomeStrategy : IIncomeStrategy
     {
-        private const decimal ProfitFactor = 0.10m; // Higher profit margin
+        private const decimal ProfitFactor = 0.10m;
 
-        public string StrategyName => "Black Income";
-        public string IncomeType => "Black";
+        public string StrategyName => "Black Income (Tax Evasion)";
 
-        public decimal GetIncome(decimal currentWealth)
+        public IncomeResult GetIncome(decimal currentWealth)
         {
-            decimal income = Math.Max(2000, currentWealth * ProfitFactor);
-            // No taxes paid
-            Console.WriteLine($"  - [Black] Gross: {income:C}, Tax: 0.00C, Net: {income:C}");
-            return income;
+            decimal grossIncome = Math.Max(2000, currentWealth * ProfitFactor);
+            decimal taxDue = 0.00m; // The black income doesn't report/pay taxes
+
+            Console.WriteLine($"  - [Black] Gross: {grossIncome:C}, Paid Tax: {taxDue:C}, Net: {grossIncome:C}");
+
+            return new IncomeResult
+            {
+                GrossIncome = grossIncome,
+                TaxPaid = taxDue, // Zero tax paid, but income was generated
+                StrategyName = StrategyName
+            };
         }
     }
 }
