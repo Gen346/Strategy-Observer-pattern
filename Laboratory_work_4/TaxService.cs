@@ -17,7 +17,9 @@ namespace Laboratory_work_4
 
             // Skip check if no income was generated (GrossIncome = 0)
             if (lastIncome == null || lastIncome.GrossIncome <= 0)
+            {
                 return;
+            }
 
             // Calculate the tax that *should* have been paid (using a simplified standard rate)
             // We use WhiteIncomeStrategy's rate for comparison, excluding special cases like Inheritance
