@@ -4,6 +4,6 @@
     {
         public decimal GrossIncome { get; set; } // Tax income
         public decimal TaxPaid { get; set; }     // Payed tax
-        public string? StrategyName { get; set; } // Stratehy name
+        public string? StrategyName { get; set; } // Strategy name
     }
 }
